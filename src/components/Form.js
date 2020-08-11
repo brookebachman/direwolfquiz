@@ -10,7 +10,7 @@ class Form extends Component {
 		this.setState({
 			answer: event.target.value,
 		});
-		console.log(this.state.answer);
+	
 	};
 
 	handleSubmit = (event) => {
@@ -120,7 +120,7 @@ class Form extends Component {
 
 		{
 			question:
-				'Which James Bond film was made into a game for the Nintendo 64 console and later for the Wii console?',
+			'Which James Bond film was made into a game for the Nintendo 64 console and later for the Wii console?',
 			quest1: 'Goldeneye',
 			quest2: 'Thunderball',
 			quest3: 'Moonraker',
@@ -129,7 +129,7 @@ class Form extends Component {
 
 		{
 			question:
-				'Which popular video game features an ex-Special Forces operator named Jack Carver, who is stranded in Micronesia?',
+			'Which popular video game features an ex-Special Forces operator named Jack Carver, who is stranded in Micronesia?',
 			quest1: 'Far Cry',
 			quest2: 'Halo 2',
 			quest3: 'Left 4 Dead',
@@ -139,22 +139,26 @@ class Form extends Component {
 
 	render() {
 		return (
-			<div className="form-group">
+			<div>
+				
 				<form onSubmit={this.handleSubmit}>
-					{this.questions.map((question) => {
+					{this.questions.map((question) => (
 						//console.log(question.question)
-						debugger;
-
-						// <>
-						// <label for="questions">Example select</label>
-						// <select onChange={this.handleAnswer} className="form-control" id="forms">
-						// 	<option value={this.state.answer}>{question.question}</option>
-						// 	<option value={this.state.answer}>{question[]}</option>
-						// 	<option value={this.state.answer}>3</option>
-						// 	<option value={this.state.answer}>4</option>
-						// </select>
-						// </>
-					})}
+						//debugger;
+						
+						<div className="form-group">
+							<div id="question">
+							<label className="form-group">{question.question}</label>
+						<select onChange={this.handleAnswer} className="form-control" id="forms">
+						
+							<option value={this.state.answer}>{question.quest1}</option>
+							<option value={this.state.answer}>{question.quest2}</option>
+							<option value={this.state.answer}>{question.quest3}</option>
+							<option value={this.state.answer}>{question.quest4}</option>
+						</select></div>
+						</div>
+						
+					))}
 
 					<button type="submit" className="btn btn-primary">
 						Submit
