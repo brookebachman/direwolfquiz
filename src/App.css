@@ -3,9 +3,12 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 400px;
+  width: 400px;
   pointer-events: none;
+  justify-content: center;
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -16,10 +19,9 @@
 .App-header {
   padding: 40px;
   background-color: #95a3bf;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }

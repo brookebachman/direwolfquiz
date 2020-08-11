@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './logo.jpg';
 import './App.css';
 //import Form from './components/Form.js'
 import quizQuestions from './components/api/quizQuestions.js';
@@ -10,16 +10,19 @@ import Result from './components/Result.js'
  class App extends Component {
   constructor(props) {
     super(props);
+    
+      this.state = {
+        counter: 0,
+        questionId: 1,
+        question: '',
+        answerOptions: [],
+        answer: '',
+        answersCount: {},
+        result: ''
+      };
+    
+    this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   
-    this.state = {
-      counter: 0,
-      questionId: 1,
-      question: '',
-      answerOptions: [],
-      answer: '',
-      answersCount: {},
-      result: ''
-    };
   }
 
   componentDidMount() {
@@ -60,14 +63,13 @@ import Result from './components/Result.js'
     }));
   }
 
-  handleAnswerSelected = (event) => {
+  handleAnswerSelected(event) {
     this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 300);
       } else {
-        // do nothing for now
+        setTimeout(() => this.setResults(this.getResults()), 300);
       }
-      setTimeout(() => this.setResults(this.getResults()), 300);
   }
 
   setNextQuestion() {
@@ -99,6 +101,12 @@ import Result from './components/Result.js'
     }
   }
 
+  
+  renderResult() {
+    return (
+      <Result quizResult={this.state.result} />
+    );
+  }
   renderQuiz() {
     return (
       <Quiz
@@ -112,22 +120,17 @@ import Result from './components/Result.js'
     );
   }
   
-  renderResult() {
-    return (
-      <Result quizResult={this.state.result} />
-    );
-  }
 
-  render(){
-  return (
-    <div className="App">
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>React Quiz</h2>
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>React Quiz</h2>
+        </div>
+        {this.state.result ? this.renderResult() : this.renderQuiz()}
       </div>
-      {this.state.result ? this.renderResult() : this.renderQuiz()}
-    </div>
-  );
+    )
   }
 }
 
