@@ -1,86 +1,57 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 class Form extends Component {
+	userData;
 	state = {
-		username: '',
-		password: '',
-		date: '',
-		time: '',
-		confirmed: '',
+		answer: '',
 	};
 
-	handleTime = (event) => {
+	handleAnswer = (event) => {
 		this.setState({
-			time: event.target.value,
+			answer: event.target.value,
 		});
 	};
-	handleDate = (event) => {
-		this.setState({
-			date: event.target.value,
-		});
-	};
-	// handleSubmit = (event) => {
-    //     console.log(localStorage.token);
-	// 	event.preventDefault();
 
-	// 	// fetch(`http://localhost:3000/appointments`, {
-	// 	// 	method: 'POST',
-	// 	// 	headers: {
-	// 	// 		Authorization: `Bearer ${localStorage.token}`,
-	// 	// 		'Content-Type': 'application/json',
-	// 	// 		Accept: 'application/json',
-	// 	// 	},
-	// 	// 	body: JSON.stringify({
-	// 	// 		appointmentee_id: parseInt(localStorage.userId),
-	// 	// 		appointmenter_id: this.props.doulaId,
-	// 	// 		date: this.state.date,
-	// 	// 		time: this.state.time,
-	// 	// 		confirmed: true,
-	// 	// 	}),
-	// 	// })
-	// 	// 	.then((r) => r.json())
-	// 	// 	.then((data) => console.log(data));
-	// };
+	handleSubmit = (event) => {
+		console.log(localStorage.token);
+		event.preventDefault();
+	};
+
+	componentDidMount() {
+		this.userData = JSON.parse(localStorage.getItem('user'));
+		if (localStorage.getItem('user')) {
+			this.setState({
+				answer: this.userData.answer,
+			});
+		} else {
+			this.setState({
+				answer: '',
+			});
+		}
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		localStorage.setItem('user', JSON.stringify(nextState));
+	}
 
 	render() {
 		return (
-			<div>
-				{/* {localStorage.token ? null : <Redirect to="/login" />} */}
-				<h1 id="appointment">Book An Appointment</h1>
-				<Form onSubmit={this.handleSubmit}>
-					<Form.Group controlId="formDate">
-						<Form.Label>Date of Appointment</Form.Label>
-						<Form.Control
-							onChange={this.handleDate}
-							value={this.state.date}
-							type="date"
-							placeholder="Enter A Date"
-						/>
-						<Form.Text className="date"></Form.Text>
-
-						<Form.Group controlId="formTime">
-							<Form.Label>What time are you available?</Form.Label>
-							<Form.Control
-								onChange={this.handleTime}
-								value={this.state.time}
-								type="time"
-								placeholder="Enter Time"
-							/>
-							<Form.Text className="text"></Form.Text>
-						</Form.Group>
-					
-						<Button variant="success" id="button" type="submit">
-							Send your answer!!
-						</Button>
-					
-					</Form.Group>
-				</Form>
+			<div class="form-group">
+				<form onSubmit={this.handleSubmit}>
+					<label for="exampleFormControlSelect1">Example select</label>
+					<select class="form-control" id="exampleFormControlSelect1">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</form>
 			</div>
 		);
 	}
 }
-
 
 export default Form;
