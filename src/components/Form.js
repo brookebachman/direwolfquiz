@@ -21,33 +21,33 @@ class Form extends Component {
 			date: event.target.value,
 		});
 	};
-	handleSubmit = (event) => {
-        console.log(localStorage.token);
-		event.preventDefault();
+	// handleSubmit = (event) => {
+    //     console.log(localStorage.token);
+	// 	event.preventDefault();
 
-		// fetch(`http://localhost:3000/appointments`, {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		Authorization: `Bearer ${localStorage.token}`,
-		// 		'Content-Type': 'application/json',
-		// 		Accept: 'application/json',
-		// 	},
-		// 	body: JSON.stringify({
-		// 		appointmentee_id: parseInt(localStorage.userId),
-		// 		appointmenter_id: this.props.doulaId,
-		// 		date: this.state.date,
-		// 		time: this.state.time,
-		// 		confirmed: true,
-		// 	}),
-		// })
-		// 	.then((r) => r.json())
-		// 	.then((data) => console.log(data));
-	};
+	// 	// fetch(`http://localhost:3000/appointments`, {
+	// 	// 	method: 'POST',
+	// 	// 	headers: {
+	// 	// 		Authorization: `Bearer ${localStorage.token}`,
+	// 	// 		'Content-Type': 'application/json',
+	// 	// 		Accept: 'application/json',
+	// 	// 	},
+	// 	// 	body: JSON.stringify({
+	// 	// 		appointmentee_id: parseInt(localStorage.userId),
+	// 	// 		appointmenter_id: this.props.doulaId,
+	// 	// 		date: this.state.date,
+	// 	// 		time: this.state.time,
+	// 	// 		confirmed: true,
+	// 	// 	}),
+	// 	// })
+	// 	// 	.then((r) => r.json())
+	// 	// 	.then((data) => console.log(data));
+	// };
 
 	render() {
 		return (
 			<div>
-				{localStorage.token ? null : <Redirect to="/login" />}
+				{/* {localStorage.token ? null : <Redirect to="/login" />} */}
 				<h1 id="appointment">Book An Appointment</h1>
 				<Form onSubmit={this.handleSubmit}>
 					<Form.Group controlId="formDate">
