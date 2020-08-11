@@ -25,23 +25,23 @@ class Form extends Component {
         console.log(localStorage.token);
 		event.preventDefault();
 
-		fetch(`http://localhost:3000/appointments`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${localStorage.token}`,
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-			},
-			body: JSON.stringify({
-				appointmentee_id: parseInt(localStorage.userId),
-				appointmenter_id: this.props.doulaId,
-				date: this.state.date,
-				time: this.state.time,
-				confirmed: true,
-			}),
-		})
-			.then((r) => r.json())
-			.then((data) => console.log(data));
+		// fetch(`http://localhost:3000/appointments`, {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		Authorization: `Bearer ${localStorage.token}`,
+		// 		'Content-Type': 'application/json',
+		// 		Accept: 'application/json',
+		// 	},
+		// 	body: JSON.stringify({
+		// 		appointmentee_id: parseInt(localStorage.userId),
+		// 		appointmenter_id: this.props.doulaId,
+		// 		date: this.state.date,
+		// 		time: this.state.time,
+		// 		confirmed: true,
+		// 	}),
+		// })
+		// 	.then((r) => r.json())
+		// 	.then((data) => console.log(data));
 	};
 
 	render() {
