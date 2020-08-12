@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 function AnswerOption(props) {
 
   
- 
-
   return (
     <p className="answerOption">
       <input

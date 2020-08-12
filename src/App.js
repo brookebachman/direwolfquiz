@@ -67,8 +67,10 @@ import Result from './components/Result.js'
     this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 500);
-        localStorage.setItem("my value in localStorage", event.currentTarget.value)
+        localStorage.setItem("my value in localStorage", event.target.value)
+        console.log(event.target.value)
         JSON.parse(localStorage.getItem('my value in localStorage'));
+      
       } else {
         setTimeout(() => this.setResults(this.getResults()), 500);
       }
