@@ -3,8 +3,8 @@
 }
 
 .App-logo {
-  height: 400px;
-  width: 400px;
+  height: 300px;
+  width: 300px;
   pointer-events: none;
   justify-content: center;
 }
@@ -19,7 +19,6 @@
 .App-header {
   padding: 40px;
   background-color: #95a3bf;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: calc(10px + 2vmin);
