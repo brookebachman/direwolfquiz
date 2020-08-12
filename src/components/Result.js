@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 function Result(props) {
   return (
     <div className="result">
-      Your answers are false!<strong>{props.quizResult}</strong>!
+      Your answers are <strong>{props.quizResult}</strong>!
+     
     </div>
   );
 }

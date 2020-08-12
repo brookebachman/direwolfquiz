@@ -18,10 +18,10 @@ import Result from './components/Result.js'
         answerOptions: [],
         answer: '',
         answersCount: {},
-        result: ''
+        result: '', 
+        specialAnswer: ''
       };
     
-    this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   
   }
 
@@ -63,13 +63,16 @@ import Result from './components/Result.js'
     }));
   }
 
-  handleAnswerSelected(event) {
+  handleAnswerSelected = (event) => {
     this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < quizQuestions.length) {
-        setTimeout(() => this.setNextQuestion(), 300);
+        setTimeout(() => this.setNextQuestion(), 500);
+        localStorage.setItem("my value in localStorage", event.currentTarget.value)
+        JSON.parse(localStorage.getItem('my value in localStorage'));
       } else {
-        setTimeout(() => this.setResults(this.getResults()), 300);
+        setTimeout(() => this.setResults(this.getResults()), 500);
       }
+      
   }
 
   setNextQuestion() {
