@@ -28,10 +28,15 @@ console.log(props, "quiz props")
     newA = JSON.parse(localStorage.myAnswers)
       for (let i = 0; i < newA.length; i++){
         for (const [key, value] of Object.entries(newA[i])) {
-          console.log(`${key}, ${value}`)
+          if (key == "questionId"){
+            lId = key
+            console.log(lId)
+          }
+         
         }
       } 
     } 
+    return lId
   }
 
   return (
