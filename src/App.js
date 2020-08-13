@@ -72,14 +72,15 @@ import Result from './components/Result.js'
     console.log(questionId)
     this.setUserAnswer(event.target.value);
 
+
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 500);
         let updatedAnswers = this.state.myAnswers.concat({questionId: questionId, answer: event.target.value})
+        //this.setState is an async function so if I just set state the component will not be mounted yet
           this.setState((prevState) => ({
             myAnswers: updatedAnswers
           }));
         localStorage.setItem("myAnswers", JSON.stringify(updatedAnswers))
-        console.log(event.target.value)
         JSON.parse(localStorage.getItem('myAnswers'));
       
       } else {

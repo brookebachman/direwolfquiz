@@ -5,7 +5,8 @@ import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
 
 function Quiz(props) {
-
+console.log(props, "quiz props")
+//{answer: "", answerOptions: Array(4), questionId: 2, question: "Which of the following video games takes place in a dystopian underwater city called Rapture?", questionTotal: 12, …} "quiz props"
   function renderAnswerOptions(key) {
     return (
       <AnswerOption
@@ -20,13 +21,26 @@ function Quiz(props) {
     );
   }
 
+  function getLocalId(){
+    let lId = 0;
+    let newA;
+    for (const [key, value] of Object.entries(localStorage)) {
+    newA = JSON.parse(localStorage.myAnswers)
+      for (let i = 0; i < newA.length; i++){
+        for (const [key, value] of Object.entries(newA[i])) {
+          console.log(`${key}, ${value}`)
+        }
+      } 
+    } 
+  }
+
   return (
       <div className="quiz">
         <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
         />
-        <Question content={props.question} />
+        <Question content={props.question} id={props.questionId}  getLocalId={getLocalId()}/>
         <ul className="answerOptions">
           {props.answerOptions.map(renderAnswerOptions)}
         </ul>
