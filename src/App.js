@@ -8,6 +8,7 @@ import Result from './components/Result.js'
 
 
  class App extends Component {
+
   constructor(props) {
     super(props);
     
@@ -18,12 +19,15 @@ import Result from './components/Result.js'
         answerOptions: [],
         answer: '',
         answersCount: {},
-        result: '', 
-        specialAnswer: ''
+        result: '',
+        myAnswers: []
+  
+        
       };
-    
+
   
   }
+ 
 
   componentDidMount() {
     const shuffledAnswerOptions = quizQuestions.map((question) => this.shuffleArray(question.answers));  
@@ -63,13 +67,20 @@ import Result from './components/Result.js'
     }));
   }
 
-  handleAnswerSelected = (event) => {
-    this.setUserAnswer(event.currentTarget.value);
+  handleAnswerSelected = (questionId, event) => {
+    console.log(event)
+    console.log(questionId)
+    this.setUserAnswer(event.target.value);
+
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 500);
-        localStorage.setItem("my value in localStorage", event.target.value)
+        let updatedAnswers = this.state.myAnswers.concat({questionId: questionId, answer: event.target.value})
+          this.setState((prevState) => ({
+            myAnswers: updatedAnswers
+          }));
+        localStorage.setItem("myAnswers", JSON.stringify(updatedAnswers))
         console.log(event.target.value)
-        JSON.parse(localStorage.getItem('my value in localStorage'));
+        JSON.parse(localStorage.getItem('myAnswers'));
       
       } else {
         setTimeout(() => this.setResults(this.getResults()), 500);

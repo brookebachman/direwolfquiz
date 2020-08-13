@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function AnswerOption(props) {
-
+console.log(props)
   
   return (
     <p className="answerOption">
@@ -14,7 +14,7 @@ function AnswerOption(props) {
         id={props.answerType}
         value={props.answerType}
         disabled={props.answer}
-        onChange={props.onAnswerSelected}
+        onChange={(event)=> props.onAnswerSelected(props.questionId, event)}
       />
       <label className="radioCustomLabel" htmlFor={props.answerType}>
         {props.answerContent}

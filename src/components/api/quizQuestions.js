@@ -2,6 +2,7 @@
 
 var quizQuestions = [
 	{
+		index: 1,
 		question: 'In what year was Sega Genesis released in North America?',
 		answers:[
 			{type: true, content: '1989'},
@@ -12,6 +13,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 2,
 		question: 'Which of the following video games takes place in a dystopian underwater city called Rapture?',
 		answers: [
 		{type: true, content:'Bioshock' } ,
@@ -22,6 +24,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 3,
 		question: 'What Nintendo system was released after the N64 and before the Wii?',
 		answers:[
 		{type: true, content:'Gamecube'},
@@ -32,6 +35,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 4,
 		question: 'Honda, Dhalsim and Chun Li are all characters from what video game series?',
 		answers:[
 		{type: true, content: 'Street Fighter'},
@@ -43,6 +47,7 @@ var quizQuestions = [
 	
 
 	{
+		index: 5,
 		question: 'What color is the ring of death on an XBOX that signifies a hardware failure?',
 		answers:[
 		{type: true, content: 'Red'},
@@ -53,6 +58,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 6,
 		question:
 			'What classic beat-em-up game featured brothers Billy Lee and Jimmy (also nicknamed Spike and Hammer)?',
 			answers: [
@@ -64,6 +70,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 7,
 		question: 'How many bits was the Super Nintendo Entertainment System?',
 		answers: [
 		{type: true, content: '16'},
@@ -74,6 +81,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 8,
 		question: 'What character do you play as in The Legend Of Zelda?',
 		answers: [
 		{type: true, content: 'Link'},
@@ -84,6 +92,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 8,
 		question: 'What 64-bit Sega system was a predecessor to the PlayStation and Nintendo 64?',
 		answers:[
 		{type: true, content: 'Saturn'},
@@ -94,6 +103,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 9,
 		question: 'The game Grand Theft Auto was released primarily for what gaming system?',
 		answers: [
 		{type: true, content: 'PlayStation'},
@@ -104,6 +114,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 10,
 		question:
 		'Which James Bond film was made into a game for the Nintendo 64 console and later for the Wii console?',
 		answers: [
@@ -115,6 +126,7 @@ var quizQuestions = [
 	},
 
 	{
+		index: 11,
 		question:
 		'Which popular video game features an ex-Special Forces operator named Jack Carver, who is stranded in Micronesia?',
 		answers:[
