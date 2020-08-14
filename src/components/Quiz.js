@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Question from '../components/Question.js';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
+import quizQuestions from './api/quizQuestions'
 
 function Quiz(props) {
 console.log(props, "quiz props")
@@ -21,23 +22,10 @@ console.log(props, "quiz props")
     );
   }
 
-  function getLocalId(){
-    let lId = 0;
-    let newA;
-    for (const [key, value] of Object.entries(localStorage)) {
-    newA = JSON.parse(localStorage.myAnswers)
-      for (let i = 0; i < newA.length; i++){
-        for (const [key, value] of Object.entries(newA[i])) {
-          if (key == "questionId"){
-            lId = key
-            console.log(lId)
-          }
-         
-        }
-      } 
-    } 
-    return lId
-  }
+  
+ 
+
+  
 
   return (
       <div className="quiz">
@@ -45,7 +33,7 @@ console.log(props, "quiz props")
           counter={props.questionId}
           total={props.questionTotal}
         />
-        <Question content={props.question} id={props.questionId}  getLocalId={getLocalId()}/>
+        <Question content={props.question} id={props.questionId}  />
         <ul className="answerOptions">
           {props.answerOptions.map(renderAnswerOptions)}
         </ul>

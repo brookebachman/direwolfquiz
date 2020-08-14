@@ -30,19 +30,56 @@ import Result from './components/Result.js'
  
 
   componentDidMount() {
-    const shuffledAnswerOptions = quizQuestions.map((question) => this.shuffleArray(question.answers));  
-  
+
+    const newA = JSON.parse(localStorage.getItem("myAnswers"))
+    console.log(newA)
+    if ( newA != null){
+      for (let i = 0; i < newA.length; i ++){
+        console.log(newA[i].questionId)
+          quizQuestions[i] = quizQuestions[newA[i].questionId]
+      }
+      
+    }
+    
+    
+    const lId = newA == null ? 1 :  newA.length + 1
+    const random = this.shuffleArray(quizQuestions,lId-1)
+    console.log(random)
+    console.log(lId)
+    // this.moveOverSaved(random, newA);
+    const shuffledAnswerOptions = random.map((question) => this.shuffleArray(question.answers, 0));  
+
     this.setState({
-      question: quizQuestions[0].question,
-      answerOptions: shuffledAnswerOptions[0]
+      questionId: lId,
+      question: random[lId].question,
+      answerOptions: shuffledAnswerOptions[lId],
+      myAnswers: newA === null ? [] : newA,
+      questionIndex: random[lId].index
     });
+
+
   }
 
-  shuffleArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  // moveOverSaved(random, newA){
+  //   // let pastQuestionId = ;
+  //   //iterate over newA get the id, 
+    
+  //   // if (newA !== null){
+  //   //   newA.unshift(newA[])
+  //   // }
+
+  // }
+
+  getRandom(floor, ceiling) {
+    return Math.floor(Math.random() * (ceiling - floor + 1)) + floor;
+  }
+  
+  shuffleArray(array, startIndex) {
+  let currentIndex = array.length
+   let temporaryValue, randomIndex;
   
     // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+    while (startIndex !== currentIndex) {
   
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -89,6 +126,7 @@ import Result from './components/Result.js'
       
   }
 
+
   setNextQuestion() {
     const counter = this.state.counter + 1;
     const questionId = this.state.questionId + 1;
@@ -97,7 +135,8 @@ import Result from './components/Result.js'
       questionId: questionId,
       question: quizQuestions[counter].question,
       answerOptions: quizQuestions[counter].answers,
-      answer: ''
+      answer: '',
+      index: quizQuestions[counter].index
     });
   }
 
@@ -129,7 +168,7 @@ import Result from './components/Result.js'
       <Quiz
         answer={this.state.answer}
         answerOptions={this.state.answerOptions}
-        questionId={this.state.questionId}
+        questionId={this.state.index}
         question={this.state.question}
         questionTotal={quizQuestions.length}
         onAnswerSelected={this.handleAnswerSelected}
