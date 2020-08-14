@@ -43,6 +43,7 @@ import Result from './components/Result.js'
     const random = this.shuffleArray(quizQuestions,lId-1)
     console.log(random)
     console.log(lId)
+    
     // this.moveOverSaved(random, newA);
     const shuffledAnswerOptions = random.map((question) => this.shuffleArray(question.answers, 0));  
 
@@ -57,19 +58,7 @@ import Result from './components/Result.js'
 
   }
 
-  // moveOverSaved(random, newA){
-  //   // let pastQuestionId = ;
-  //   //iterate over newA get the id, 
-    
-  //   // if (newA !== null){
-  //   //   newA.unshift(newA[])
-  //   // }
 
-  // }
-
-  getRandom(floor, ceiling) {
-    return Math.floor(Math.random() * (ceiling - floor + 1)) + floor;
-  }
 
   shuffleArray(array, startIndex) {
     console.log(startIndex)
