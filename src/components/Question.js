@@ -8,19 +8,15 @@ function Question(props) {
 			<h2 className="question">{props.question.question} </h2>
 
 			{props.question.answers.map((element, index) => (
-
 				<p className="answerOption">
-				
 					<input
 						type="radio"
 						className="radioCustomButton"
-						name="radioGroup"			
-
+						name="radioGroup"
 						onChange={(event) => props.storeAnswers(event, props.question, index)}
 					/>
 					{element.content}
 				</p>
-				
 			))}
 		</>
 	);

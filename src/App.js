@@ -65,6 +65,19 @@ class App extends Component {
     
     
   }
+
+  getTotalQuestions(){
+    let alreadyAnswered = this.state.answerSubmissions.length
+    let totalQs = quizQuestions.length + alreadyAnswered 
+    if (this.state.currentQuestion !== null){
+      totalQs += 1
+    }
+    return totalQs
+  }
+
+  getCurrentQuestionNumber(){
+    return this.state.answerSubmissions.length + 1
+  }
   
   storeAnswers = (event, question, index) => {
     let answers = []
@@ -168,8 +181,10 @@ class App extends Component {
 			<div className="App">
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
-					<h2>So you think you know Gaming?</h2>
-					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
+					<h1>So you think you know Gaming?</h1>
+    <p>You are on {this.getCurrentQuestionNumber()} of {this.getTotalQuestions()} </p>
+
+					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers}/>
 				</div>
 				{/* {this.state.result ? this.renderResult() : this.renderQuiz()} */}
 			</div>
