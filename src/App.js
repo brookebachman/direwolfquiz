@@ -61,6 +61,21 @@ class App extends Component {
 		let question = quizQuestions[randomIdx];
 		quizQuestions.splice(randomIdx, 1);
 		console.log(question);
+		fetch('https://localhost:3000/nextquestion', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-type': 'application/json',
+			},
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+				this.setState({
+					answerSubmssions: answerSubmissions,
+					currentQuestion: this.getNextQuestion(quizQuestions),
+				});
+			});
+
 		return question;
 	}
 
