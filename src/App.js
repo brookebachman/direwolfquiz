@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
 //import Form from './components/Form.js'
-import quizQuestions from './components/api/quizQuestions.js';
+import quizQuestions from '../server/api/quizQuestions.js';
 import Quiz from './components/Quiz.js';
 import Result from './components/Result.js';
 import Question from './components/Question';
@@ -59,41 +59,38 @@ class App extends Component {
 		let numQuestions = quizQuestions.length;
 		let randomIdx = Math.floor(Math.random() * 100) % numQuestions;
 		let question = quizQuestions[randomIdx];
-    quizQuestions.splice(randomIdx,1);
-    console.log(question)
-    return question;
-    
-    
-  }
+		quizQuestions.splice(randomIdx, 1);
+		console.log(question);
+		return question;
+	}
 
-  getTotalQuestions(){
-    let alreadyAnswered = this.state.answerSubmissions.length
-    let totalQs = quizQuestions.length + alreadyAnswered 
-    if (this.state.currentQuestion !== null){
-      totalQs += 1
-    }
-    return totalQs
-  }
+	getTotalQuestions() {
+		let alreadyAnswered = this.state.answerSubmissions.length;
+		let totalQs = quizQuestions.length + alreadyAnswered;
+		if (this.state.currentQuestion !== null) {
+			totalQs += 1;
+		}
+		return totalQs;
+	}
 
-  getCurrentQuestionNumber(){
-    return this.state.answerSubmissions.length + 1
-  }
-  
-  storeAnswers = (event, question, index) => {
-    let answers = []
-    let questionAnswer = {
-      answer: index,
-      question: question
-    }
+	getCurrentQuestionNumber() {
+		return this.state.answerSubmissions.length + 1;
+	}
 
-    let answerSubmissions = this.state.answerSubmissions;
-    answerSubmissions.push(questionAnswer);
-    this.setState({
-      answerSubmssions: answerSubmissions,
-      currentQuestion: this.getNextQuestion(quizQuestions),
-    });
-  
-  }
+	storeAnswers = (event, question, index) => {
+		let answers = [];
+		let questionAnswer = {
+			answer: index,
+			question: question,
+		};
+
+		let answerSubmissions = this.state.answerSubmissions;
+		answerSubmissions.push(questionAnswer);
+		this.setState({
+			answerSubmssions: answerSubmissions,
+			currentQuestion: this.getNextQuestion(quizQuestions),
+		});
+	};
 
 	// setUserAnswer(answer) {
 	//   this.setState((state) => ({
@@ -175,16 +172,19 @@ class App extends Component {
 	// }
 
 	render() {
-    if (this.state.currentQuestion === null) { return (
-    <div></div> )}
+		if (this.state.currentQuestion === null) {
+			return <div></div>;
+		}
 		return (
 			<div className="App">
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1>So you think you know Gaming?</h1>
-    <p>You are on {this.getCurrentQuestionNumber()} of {this.getTotalQuestions()} </p>
+					<p>
+						You are on {this.getCurrentQuestionNumber()} of {this.getTotalQuestions()}{' '}
+					</p>
 
-					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers}/>
+					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
 				</div>
 				{/* {this.state.result ? this.renderResult() : this.renderQuiz()} */}
 			</div>

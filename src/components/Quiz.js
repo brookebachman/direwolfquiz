@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Question from '../components/Question.js';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
-import quizQuestions from './api/quizQuestions'
+import quizQuestions from '../../server/api/quizQuestions'
 
 function Quiz(props) {
 console.log(props, "quiz props")
