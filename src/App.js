@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
 //import Form from './components/Form.js'
-import quizQuestions from '../server/api/quizQuestions.js';
-import Quiz from './components/Quiz.js';
+
+
 import Result from './components/Result.js';
 import Question from './components/Question';
 
@@ -26,66 +26,32 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// const newA = JSON.parse(localStorage.getItem("myAnswers"))
-		// console.log(newA)
-		// if ( newA != null){
-		//   for (let i = 0; i < newA.length; i ++){
-		//     console.log(newA[i].questionId)
-		//       quizQuestions[i] = quizQuestions[newA[i].questionId]
-		//   }
-
-		// }
-
-		// const lId = newA == null ? 1 :  newA.length + 1
-		// const random = this.shuffleArray(quizQuestions,lId-1)
-		// console.log(random)
-		// console.log(lId)
-
-		// this.moveOverSaved(random, newA);
-		// const shuffledAnswerOptions = random.map((question) => this.shuffleArray(question.answers, 0));
-
-		this.setState({
-			// questionId: lId,
-			// question: random[lId].question,
-			// answerOptions: shuffledAnswerOptions[lId],
-			// myAnswers: newA === null ? [] : newA,
-			// questionIndex: random[lId].index
-
-			currentQuestion: this.getNextQuestion(quizQuestions),
-		});
+		this.getNextQuestion();
 	}
 
-	getNextQuestion(quizQuestions) {
-		let numQuestions = quizQuestions.length;
-		let randomIdx = Math.floor(Math.random() * 100) % numQuestions;
-		let question = quizQuestions[randomIdx];
-		quizQuestions.splice(randomIdx, 1);
-		console.log(question);
-		fetch('https://localhost:3000/nextquestion', {
+	getNextQuestion() {
+		fetch('http://localhost:3000/nextquestion', {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
-				'Content-type': 'application/json',
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
 			},
-		})
-			.then((resp) => resp.json())
-			.then((data) => {
-				this.setState({
-					answerSubmssions: answerSubmissions,
-					currentQuestion: this.getNextQuestion(quizQuestions),
-				});
+		}).then((data) => {
+      console.log(data)
+			this.setState({
+				currentQuestion: JSON.parse(data),
 			});
-
-		return question;
+		});
 	}
 
 	getTotalQuestions() {
-		let alreadyAnswered = this.state.answerSubmissions.length;
-		let totalQs = quizQuestions.length + alreadyAnswered;
-		if (this.state.currentQuestion !== null) {
-			totalQs += 1;
-		}
-		return totalQs;
+		// let alreadyAnswered = this.state.answerSubmissions.length;
+		// let totalQs = quizQuestions.length + alreadyAnswered;
+		// if (this.state.currentQuestion !== null) {
+		// 	totalQs += 1;
+		// }
+		return 12;
 	}
 
 	getCurrentQuestionNumber() {
@@ -103,7 +69,7 @@ class App extends Component {
 		answerSubmissions.push(questionAnswer);
 		this.setState({
 			answerSubmssions: answerSubmissions,
-			currentQuestion: this.getNextQuestion(quizQuestions),
+		
 		});
 	};
 
