@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
-import Score from './components/Score.js'
+import Score from './components/Score.js';
 //import Form from './components/Form.js'
 import Question from './components/Question.js';
 
@@ -40,7 +40,6 @@ class App extends Component {
 
 	//This function allows us to send the answer that has been chosen by the user back to the server. We also keep track of what question has already been asked. We send this information back to the server in the body
 	storeAnswers = (event, question, index) => {
-		console.log(event.target.value);
 		fetch('http://localhost:3000/submitanswer', {
 			method: 'POST',
 			headers: {
@@ -56,10 +55,10 @@ class App extends Component {
 			.then((resp) => resp.json())
 			.then((data) => {
 				//after we have successfully sent the information back to the server we want to render another question
-				this.getNextQuestion()
-			
+				this.getNextQuestion();
 			});
-			event.target.checked = false
+			//here I am unchecking the previously selected answer
+			event.target.checked = false;
 	};
 
 	render() {
@@ -71,10 +70,12 @@ class App extends Component {
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1>So you think you know Gaming?</h1>
-        {(typeof this.state.currentQuestion.answers) !== "undefined" ?  
-					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
-      :    <Score score={this.state.currentQuestion} />  }
-      	</div>
+					{typeof this.state.currentQuestion.answers !== 'undefined' ? (
+						<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
+					) : (
+						<Score score={this.state.currentQuestion} />
+					)}
+				</div>
 			</div>
 		);
 	}
