@@ -3,7 +3,6 @@ import logo from './logo.jpg';
 import './App.css';
 //import Form from './components/Form.js'
 
-
 import Result from './components/Result.js';
 import Question from './components/Question';
 
@@ -21,7 +20,7 @@ class App extends Component {
 			//   result: '',
 			//   myAnswers: []
 			currentQuestion: null,
-			answerSubmissions: [],
+			correctAnswer: false,
 		};
 	}
 
@@ -34,44 +33,67 @@ class App extends Component {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
-        'Content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+				'Content-type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
 			},
-    }).then((resp)=> resp.json())
-    .then((data) => {
-      console.log(data)
-			this.setState({
-				currentQuestion: data,
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+				console.log(data);
+				this.setState({
+					currentQuestion: data,
+					id: data,
+				});
 			});
-		});
 	}
 
 	getTotalQuestions() {
+		// fetch("http://localhost:3000/nextquestion")
 		// let alreadyAnswered = this.state.answerSubmissions.length;
 		// let totalQs = quizQuestions.length + alreadyAnswered;
 		// if (this.state.currentQuestion !== null) {
 		// 	totalQs += 1;
 		// }
-		return 12;
+		return 10;
 	}
 
-	getCurrentQuestionNumber() {
-		return this.state.answerSubmissions.length + 1;
-	}
+	// getCurrentQuestionNumber() {
+	// 	return this.state.answerSubmissions.length + 1;
+	// }
 
 	storeAnswers = (event, question, index) => {
-		let answers = [];
-		let questionAnswer = {
-			answer: index,
-			question: question,
-		};
+		console.log(event.target.value);
+		fetch('http://localhost:3000/submitanswer', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: JSON.stringify({
+				answerSubmission: event.target.value,
+				questionId: this.state.currentQuestion.questionId,
+			}),
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+        
+        this.getNextQuestion()
+			});
+		// let result = document.createElement("h2")
+		// result.innerHTML = this.state.correctAnswer
+		// let answers = [];
+		// let questionAnswer = {
+		// 	answer: index,
+		// 	question: question,
+		// };
 
-		let answerSubmissions = this.state.answerSubmissions;
-		answerSubmissions.push(questionAnswer);
-		this.setState({
-			answerSubmssions: answerSubmissions,
-		
-		});
+		// let answerSubmissions = this.state.answerSubmissions;
+		// //answerSubmissions.push(questionAnswer);
+		// this.setState({
+		// 	answerSubmissions: answerSubmissions,
+
+		// });
 	};
 
 	// setUserAnswer(answer) {
@@ -162,9 +184,6 @@ class App extends Component {
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1>So you think you know Gaming?</h1>
-					<p>
-						You are on {this.getCurrentQuestionNumber()} of {this.getTotalQuestions()}{' '}
-					</p>
 
 					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
 				</div>

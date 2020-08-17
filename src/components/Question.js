@@ -13,6 +13,7 @@ function Question(props) {
 						type="radio"
 						className="radioCustomButton"
 						name="radioGroup"
+						value = {element.content}
 						onChange={(event) => props.storeAnswers(event, props.question, index)}
 					/>
 					{element.content}
