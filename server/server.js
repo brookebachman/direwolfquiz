@@ -14,9 +14,9 @@ app.options('*', cors());
 //   d. Get Final Score
 
 //work on request body
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-  });
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//   });
 
 app.post('/startquiz', (req, res) => {
   res.send('Hello World!')

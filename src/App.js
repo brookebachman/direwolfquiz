@@ -41,7 +41,7 @@ class App extends Component {
     .then((data) => {
       console.log(data)
 			this.setState({
-				currentQuestion: JSON.parse(data),
+				currentQuestion: data,
 			});
 		});
 	}
