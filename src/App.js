@@ -19,7 +19,7 @@ class App extends Component {
 	}
 
 	getNextQuestion() {
-		fetch('http://localhost:3000/nextquestion', {
+		fetch('http://localhost:3000/quiz', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',

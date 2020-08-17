@@ -7,13 +7,13 @@ app.use(cors());
 app.options('*', cors());
 app.use(express.json());
 
+//this is reading the json file that I created
 let progress = JSON.parse(fs.readFileSync(__dirname + '/progress.json', 'utf8'));
 
-app.post('/startquiz', (req, res) => {
-	res.send('Hello World!');
-});
+//initializing an array for me to load the quizQuestions into
 const quizQuestions = [];
-app.get('/nextquestion', (req, res) => {
+//this is the endpoint that triggers the quiz to begin, if you close and quiz and come back this endpoint will take you to the question you left off on
+app.get('/quiz', (req, res) => {
 	let filteredQuestions = quizQuestions.filter((question) => {
 		return !question.answered;
 	});
@@ -21,15 +21,16 @@ app.get('/nextquestion', (req, res) => {
 		//console.log(filteredQuestions);
 		endGame(res);
 	}
-
+	//here I am generating a random index to allow me to randomize the questions
 	let randomIdx = Math.floor(Math.random() * 100) % filteredQuestions.length;
 	let question = filteredQuestions[randomIdx];
-	
 	res.json(question);
 });
-
+//this function is what totals the score at the end of the quiz
 function endGame(res) {
+
 	let score = 0;
+	//I am iterating over the quiz question array of objects, there is a correct attribute, so I am checking if the question was correct, and if it was I increment it
 	quizQuestions.forEach((question, i) => {
 		if (question.correct) {
 			score++;
@@ -37,18 +38,20 @@ function endGame(res) {
 		quizQuestions[i].correct = false;
 		quizQuestions[i].answered = false;
 	});
+	//This clears the json file so you can play again starting fresh without saved answers
 	fs.writeFileSync(__dirname + '/progress.json', '{}', 'utf8');
-	//this clears the json file so you can play again newly
+	
 	res.json({
 		score,
 		numOfQuestions: quizQuestions.length,
 		percentage: (score / quizQuestions.length) * 100,
 	}).end();
 }
-
+//this endpoint is where my http request goes to, to persist the data that the user answered.
 app.post('/submitanswer', (req, res) => {
-    let correctAnswer = quizQuestions[req.body.questionId].answers[0].content;
-    console.log(correctAnswer, "correct answer", req.body.answerSubmission, "answer sub")
+	//I know that the element in index 0 of the answers array is the correct answer
+	let correctAnswer = quizQuestions[req.body.questionId].answers[0].content;
+	//if the answer is in the req.body I know that it was sent in the body of the http request so it means the question was answered
     quizQuestions[req.body.questionId].answered = true;
     
 	let answer = { 'result': 'incorrect' };
@@ -56,6 +59,7 @@ app.post('/submitanswer', (req, res) => {
 		quizQuestions[req.body.questionId].correct = true;
 		answer['result'] = 'correct';
 	}
+	//This is the file I am reading which is the object that saves the questions and answered
 	fs.writeFileSync(__dirname + '/progress.json', JSON.stringify(quizQuestions), 'utf8');
 	res.json(answer);
 });
