@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 
 function Question(props) {
 	console.log(props.question);
 	return (
 		<>
 			<h2 className="question">{props.question.question} </h2>
-
+	
 			{props.question.answers.map((element, index) => (
 				<p className="answerOption">
 					<input
@@ -19,6 +19,7 @@ function Question(props) {
 					{element.content}
 				</p>
 			))}
+			
 		</>
 	);
 }
