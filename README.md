@@ -1,3 +1,5 @@
+** Make sure to use the direwolfserverandclient branch. This is the final branch.**
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
