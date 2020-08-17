@@ -3,14 +3,11 @@ import logo from './logo.jpg';
 import './App.css';
 import Score from './components/score.js'
 //import Form from './components/Form.js'
-
-import Result from './components/Result.js';
 import Question from './components/Question';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			currentQuestion: null,
 			correctAnswer: false,
@@ -40,20 +37,6 @@ class App extends Component {
 			});
 	}
 
-	getTotalQuestions() {
-		// fetch("http://localhost:3000/nextquestion")
-		// let alreadyAnswered = this.state.answerSubmissions.length;
-		// let totalQs = quizQuestions.length + alreadyAnswered;
-		// if (this.state.currentQuestion !== null) {
-		// 	totalQs += 1;
-		// }
-		return 10;
-	}
-
-	// getCurrentQuestionNumber() {
-	// 	return this.state.answerSubmissions.length + 1;
-	// }
-
 	storeAnswers = (event, question, index) => {
 		console.log(event.target.value);
 		fetch('http://localhost:3000/submitanswer', {
@@ -74,8 +57,6 @@ class App extends Component {
 			});
 
 	};
-
-
 
 	render() {
 		if (this.state.currentQuestion === null) {

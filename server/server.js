@@ -18,13 +18,13 @@ app.get('/nextquestion', (req, res) => {
 		return !question.answered;
 	});
 	if (filteredQuestions.length < 1) {
-		console.log(filteredQuestions);
+		//console.log(filteredQuestions);
 		endGame(res);
 	}
 
 	let randomIdx = Math.floor(Math.random() * 100) % filteredQuestions.length;
 	let question = filteredQuestions[randomIdx];
-	//console.log(question);
+	
 	res.json(question);
 });
 
@@ -47,23 +47,17 @@ function endGame(res) {
 }
 
 app.post('/submitanswer', (req, res) => {
-	let correctAnswer = quizQuestions[req.body.questionId].answers[0].content;
-	quizQuestions[req.body.questionId].answered = true;
-	let answer = { result: 'incorrect' };
-	if (correctAnswer === req.answerSubmission) {
+    let correctAnswer = quizQuestions[req.body.questionId].answers[0].content;
+    console.log(correctAnswer, "correct answer", req.body.answerSubmission, "answer sub")
+    quizQuestions[req.body.questionId].answered = true;
+    
+	let answer = { 'result': 'incorrect' };
+	if (correctAnswer === req.body.answerSubmission) {
 		quizQuestions[req.body.questionId].correct = true;
-		answer[result] = 'correct';
+		answer['result'] = 'correct';
 	}
 	fs.writeFileSync(__dirname + '/progress.json', JSON.stringify(quizQuestions), 'utf8');
 	res.json(answer);
-});
-
-app.post('/finalscore', (req, res) => {
-	res.send('Hello World!');
-});
-
-app.post('/currentQuestion', (req, res) => {
-	res.send('Hello World!');
 });
 
 app.listen(port, () => {
@@ -122,13 +116,3 @@ fs.readFile(__dirname + '/quizQuestions.txt', 'utf8', function (err, data) {
 		}
 	}
 });
-
-// server.js
-/*
-1. Parse quiz questions
-2. Start server
-3. Create the different
-  a. Start quiz (this allows us to identify differents)
-  b. Get question (input probably needs to be some quiz)
-  c. Submit answer 
-  d. Get Final Score */
