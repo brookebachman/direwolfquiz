@@ -19,11 +19,10 @@ function Question(props) {
 		<input
 			type="checkbox"
 			className="radioCustomButton"
-			
 			name="radioGroup"
 			value = {element.content}
 			onChange={(event) => props.storeAnswers(event, props.question, index)}
-			value = ""
+			
 		/>
 		{element.content}
 		

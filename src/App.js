@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
-import Score from './components/score.js'
+import Score from './components/Score.js'
 //import Form from './components/Form.js'
-import Question from './components/Question';
+import Question from './components/Question.js';
 
 class App extends Component {
 	constructor(props) {
@@ -18,6 +18,7 @@ class App extends Component {
 		this.getNextQuestion();
 	}
 
+	//This function initializes a get request to get the question from the server
 	getNextQuestion() {
 		fetch('http://localhost:3000/quiz', {
 			method: 'GET',
@@ -29,7 +30,7 @@ class App extends Component {
 		})
 			.then((resp) => resp.json())
 			.then((data) => {
-				console.log(data);
+				//here we are updating state to have the current question and its id
 				this.setState({
 					currentQuestion: data,
 					id: data,
@@ -37,6 +38,7 @@ class App extends Component {
 			});
 	}
 
+	//This function allows us to send the answer that has been chosen by the user back to the server. We also keep track of what question has already been asked. We send this information back to the server in the body
 	storeAnswers = (event, question, index) => {
 		console.log(event.target.value);
 		fetch('http://localhost:3000/submitanswer', {
@@ -53,9 +55,11 @@ class App extends Component {
 		})
 			.then((resp) => resp.json())
 			.then((data) => {
-        this.getNextQuestion()
+				//after we have successfully sent the information back to the server we want to render another question
+				this.getNextQuestion()
+			
 			});
-
+			event.target.checked = false
 	};
 
 	render() {
