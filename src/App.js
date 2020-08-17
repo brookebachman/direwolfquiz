@@ -1,190 +1,65 @@
 import React, { Component } from 'react';
 import logo from './logo.jpg';
 import './App.css';
+import Score from './components/Score.js';
 //import Form from './components/Form.js'
-import quizQuestions from '../server/api/quizQuestions.js';
-import Quiz from './components/Quiz.js';
-import Result from './components/Result.js';
-import Question from './components/Question';
+import Question from './components/Question.js';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
-			//   counter: 0,
-			//   questionId: 1,
-			//   question: '',
-			//   answerOptions: [],
-			//   answer: '',
-			//   answersCount: {},
-			//   result: '',
-			//   myAnswers: []
 			currentQuestion: null,
-			answerSubmissions: [],
+			correctAnswer: false,
 		};
 	}
 
 	componentDidMount() {
-		// const newA = JSON.parse(localStorage.getItem("myAnswers"))
-		// console.log(newA)
-		// if ( newA != null){
-		//   for (let i = 0; i < newA.length; i ++){
-		//     console.log(newA[i].questionId)
-		//       quizQuestions[i] = quizQuestions[newA[i].questionId]
-		//   }
-
-		// }
-
-		// const lId = newA == null ? 1 :  newA.length + 1
-		// const random = this.shuffleArray(quizQuestions,lId-1)
-		// console.log(random)
-		// console.log(lId)
-
-		// this.moveOverSaved(random, newA);
-		// const shuffledAnswerOptions = random.map((question) => this.shuffleArray(question.answers, 0));
-
-		this.setState({
-			// questionId: lId,
-			// question: random[lId].question,
-			// answerOptions: shuffledAnswerOptions[lId],
-			// myAnswers: newA === null ? [] : newA,
-			// questionIndex: random[lId].index
-
-			currentQuestion: this.getNextQuestion(quizQuestions),
-		});
+		this.getNextQuestion();
 	}
 
-	getNextQuestion(quizQuestions) {
-		let numQuestions = quizQuestions.length;
-		let randomIdx = Math.floor(Math.random() * 100) % numQuestions;
-		let question = quizQuestions[randomIdx];
-		quizQuestions.splice(randomIdx, 1);
-		console.log(question);
-		fetch('https://localhost:3000/nextquestion', {
-			method: 'POST',
+	//This function initializes a get request to get the question from the server
+	getNextQuestion() {
+		fetch('http://localhost:3000/quiz', {
+			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'Content-type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
 			},
 		})
 			.then((resp) => resp.json())
 			.then((data) => {
+				//here we are updating state to have the current question and its id
 				this.setState({
-					answerSubmssions: answerSubmissions,
-					currentQuestion: this.getNextQuestion(quizQuestions),
+					currentQuestion: data,
+					id: data,
 				});
 			});
-
-		return question;
 	}
 
-	getTotalQuestions() {
-		let alreadyAnswered = this.state.answerSubmissions.length;
-		let totalQs = quizQuestions.length + alreadyAnswered;
-		if (this.state.currentQuestion !== null) {
-			totalQs += 1;
-		}
-		return totalQs;
-	}
-
-	getCurrentQuestionNumber() {
-		return this.state.answerSubmissions.length + 1;
-	}
-
+	//This function allows us to send the answer that has been chosen by the user back to the server. We also keep track of what question has already been asked. We send this information back to the server in the body
 	storeAnswers = (event, question, index) => {
-		let answers = [];
-		let questionAnswer = {
-			answer: index,
-			question: question,
-		};
-
-		let answerSubmissions = this.state.answerSubmissions;
-		answerSubmissions.push(questionAnswer);
-		this.setState({
-			answerSubmssions: answerSubmissions,
-			currentQuestion: this.getNextQuestion(quizQuestions),
-		});
+		fetch('http://localhost:3000/submitanswer', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: JSON.stringify({
+				answerSubmission: event.target.value,
+				questionId: this.state.currentQuestion.questionId,
+			}),
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+				//after we have successfully sent the information back to the server we want to render another question
+				this.getNextQuestion();
+			});
+			//here I am unchecking the previously selected answer
+			event.target.checked = false;
 	};
-
-	// setUserAnswer(answer) {
-	//   this.setState((state) => ({
-	//     answersCount: {
-	//       ...state.answersCount,
-	//       [answer]: (state.answersCount[answer] || 0) + 1
-	//     },
-	//     answer: answer
-	//   }));
-	// }
-
-	// handleAnswerSelected = (questionId, event) => {
-	//   console.log(event)
-	//   console.log(questionId)
-	//   this.setUserAnswer(event.target.value);
-
-	//   if (this.state.questionId < quizQuestions.length) {
-	//       setTimeout(() => this.setNextQuestion(), 500);
-	//       let updatedAnswers = this.state.myAnswers.concat({questionId: questionId, answer: event.target.value})
-	//       //this.setState is an async function so if I just set state the component will not be mounted yet
-	//         this.setState((prevState) => ({
-	//           myAnswers: updatedAnswers
-	//         }));
-	//       localStorage.setItem("myAnswers", JSON.stringify(updatedAnswers))
-	//       JSON.parse(localStorage.getItem('myAnswers'));
-
-	//     } else {
-	//       setTimeout(() => this.setResults(this.getResults()), 500);
-	//     }
-
-	// }
-
-	// setNextQuestion() {
-	//   const counter = this.state.counter + 1;
-	//   const questionId = this.state.questionId + 1;
-	//   this.setState({
-	//     counter: counter,
-	//     questionId: questionId,
-	//     question: quizQuestions[counter].question,
-	//     answerOptions: quizQuestions[counter].answers,
-	//     answer: '',
-	//     index: quizQuestions[counter].index
-	//   });
-	// }
-
-	// getResults() {
-	//   const answersCount = this.state.answersCount;
-	//   const answersCountKeys = Object.keys(answersCount);
-	//   const answersCountValues = answersCountKeys.map((key) => answersCount[key]);
-	//   const maxAnswerCount = Math.max.apply(null, answersCountValues);
-
-	//   return answersCountKeys.filter((key) => answersCount[key] === maxAnswerCount);
-	// }
-
-	// setResults (result) {
-	//   if (result.length === 1) {
-	//     this.setState({ result: result[0] });
-	//   } else {
-	//     this.setState({ result: 'Undetermined' });
-	//   }
-	// }
-
-	// renderResult() {
-	//   return (
-	//     <Result quizResult={this.state.result} />
-	//   );
-	// }
-	// renderQuiz() {
-	//   return (
-	//     <Quiz
-	//       answer={this.state.answer}
-	//       answerOptions={this.state.answerOptions}
-	//       questionId={this.state.index}
-	//       question={this.state.question}
-	//       questionTotal={quizQuestions.length}
-	//       onAnswerSelected={this.handleAnswerSelected}
-	//     />
-	//   );
-	// }
 
 	render() {
 		if (this.state.currentQuestion === null) {
@@ -195,13 +70,12 @@ class App extends Component {
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1>So you think you know Gaming?</h1>
-					<p>
-						You are on {this.getCurrentQuestionNumber()} of {this.getTotalQuestions()}{' '}
-					</p>
-
-					<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
+					{typeof this.state.currentQuestion.answers !== 'undefined' ? (
+						<Question question={this.state.currentQuestion} storeAnswers={this.storeAnswers} />
+					) : (
+						<Score score={this.state.currentQuestion} />
+					)}
 				</div>
-				{/* {this.state.result ? this.renderResult() : this.renderQuiz()} */}
 			</div>
 		);
 	}
