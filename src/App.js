@@ -31,13 +31,14 @@ class App extends Component {
 
 	getNextQuestion() {
 		fetch('http://localhost:3000/nextquestion', {
-			method: 'POST',
+			method: 'GET',
 			headers: {
 				Accept: 'application/json',
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*'
 			},
-		}).then((data) => {
+    }).then((resp)=> resp.json())
+    .then((data) => {
       console.log(data)
 			this.setState({
 				currentQuestion: JSON.parse(data),
